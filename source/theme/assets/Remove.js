@@ -1,7 +1,7 @@
 // Core
 import React, { Component } from 'react';
 
-// Imstruments
+// Instruments
 import { withSvg } from '../../instruments/withSvg';
 
 class Remove extends Component {

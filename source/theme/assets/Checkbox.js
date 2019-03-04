@@ -1,7 +1,7 @@
 // Core
 import React, { Component } from 'react';
 
-// Imstruments
+// Instruments
 import { withSvg } from '../../instruments/withSvg';
 
 class Checkbox extends Component {

@@ -23,7 +23,7 @@
         "gh-pages": "gh-pages -d build"
     },
     "dependencies": {
-        "classnames": "2.2.6",
+        "classnames": "^2.2.6",
         "moment": "2.23.0",
         "react": "16.7.0",
         "react-dom": "16.7.0",
