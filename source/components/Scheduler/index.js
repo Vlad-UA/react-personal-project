@@ -35,7 +35,7 @@ export default class Scheduler extends Component {
         this._setTasksFetchingState(true);
         const tasks = await api.fetchTasks();
 
-        this.setState({ tasks });
+        this.setState({ tasks: sortTasksByGroup(tasks) });
 
         this._setTasksFetchingState(false);
     };
@@ -52,7 +52,7 @@ export default class Scheduler extends Component {
         await api.completeAllTasks(tasks);
 
         this.setState((currentState) => ({
-            tasks: currentState.tasks.map((task) => ({ ...task, completed: true })),
+            tasks: sortTasksByGroup(currentState.tasks.map((task) => ({ ...task, completed: true }))),
         }));
 
         this._setTasksFetchingState(false);
@@ -69,7 +69,7 @@ export default class Scheduler extends Component {
             const response = await api.createTask(newTaskMessage);
 
             this.setState((stateCurrent) => ({
-                tasks:          [...stateCurrent.tasks, { ...response }],
+                tasks:          sortTasksByGroup([...stateCurrent.tasks, { ...response }]),
                 newTaskMessage: '',
             }));
             this._setTasksFetchingState(false);
@@ -89,7 +89,7 @@ export default class Scheduler extends Component {
         await api.removeTask(id);
 
         this.setState((stateCurrent) => ({
-            tasks: stateCurrent.tasks.filter((task) => task.id !== id),
+            tasks: sortTasksByGroup(stateCurrent.tasks.filter((task) => task.id !== id)),
         }));
         this._setTasksFetchingState(false);
     };
@@ -100,7 +100,9 @@ export default class Scheduler extends Component {
         const response = await api.updateTask(task);
 
         this.setState((currentState) => ({
-            tasks: [...currentState.tasks.filter((task2) => task2.id !== task.id), ...response],
+            tasks: sortTasksByGroup(currentState.tasks.map((task2) =>
+                task2.id !== task.id ? task2 : response[0]
+            )),
         }));
 
         this._setTasksFetchingState(false);
@@ -154,7 +156,7 @@ export default class Scheduler extends Component {
                                     staggerDurationBy = { 0 }
                                     typeName = 'div'
                                     verticalAlignment = 'top'>
-                                    {sortTasksByGroup(this._getFilteredTasks(tasks, tasksFilter)).map(({ id, completed, favorite, message }) => (
+                                    {this._getFilteredTasks(tasks, tasksFilter).map(({ id, completed, favorite, message }) => (
                                         <Task
                                             _removeTaskAsync = { this._removeTaskAsync }
                                             _updateTaskAsync = { this._updateTaskAsync }

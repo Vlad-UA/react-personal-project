@@ -24,7 +24,6 @@ const callApi = async ({ method= 'GET', options={}, data={}, urlAddition='' }={}
             }
         } else {
             console.log("fetchTasks::response.status", response.status);
-            // TODO check solution
             throw new Error(`fetchTasks:: incorrect status`);
         }
     } catch (error) {

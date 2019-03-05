@@ -1,7 +1,6 @@
 // Core
 import moment from 'moment';
 
-// TODO not listined
 import { v4 } from 'uuid';
 
 export function getDisplayName (WrappedComponent) {
