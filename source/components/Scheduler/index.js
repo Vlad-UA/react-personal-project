@@ -59,11 +59,11 @@ export default class Scheduler extends Component {
     };
 
     _createTaskAsync = async (event) => {
+        event.preventDefault();
+
         const { newTaskMessage } = this.state;
 
         if (newTaskMessage.length > 0) {
-            event.preventDefault();
-
             this._setTasksFetchingState(true);
 
             const response = await api.createTask(newTaskMessage);
