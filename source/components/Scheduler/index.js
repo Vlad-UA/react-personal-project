@@ -99,9 +99,9 @@ export default class Scheduler extends Component {
 
         const response = await api.updateTask(task);
 
-        // this.setState((currentState) => ({
-        //     tasks: [...currentState.tasks.filter((task2) => task2.id !== task.id), ...response],
-        // }));
+        this.setState((currentState) => ({
+            tasks: [...currentState.tasks.filter((task2) => task2.id !== task.id), ...response],
+        }));
 
         this._setTasksFetchingState(false);
     };
